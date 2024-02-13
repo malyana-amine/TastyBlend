@@ -1,0 +1,23 @@
+# Server Configuration
+
+spring:
+  datasource:
+    url: jdbc:postgresql://localhost:5432/secur1ty?createDatabaseIfNotExist=true
+    username: postgres
+    password: 12
+  jpa:
+    hibernate:
+      ddl-auto: none
+    show-sql: true
+
+  liquibase:
+    change-log: classpath:db/changelog-master.xml
+
+# JWT Configuration
+application:
+  security:
+    jwt:
+      secret-key: amine
+      expiration: 3600000
+      refresh-token:
+        expiration: 2592000000

@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+                      http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.24.xsd"
+        objectQuotingStrategy="QUOTE_ONLY_RESERVED_WORDS">
+    <changeSet id="1707901700330-1" author="viet (generated)">
+        <addColumn tableName="image">
+            <column name="recipe_id" type="INT"/>
+        </addColumn>
+    </changeSet>
+    <changeSet id="1707901700330-2" author="viet (generated)">
+        <addForeignKeyConstraint baseColumnNames="recipe_id" baseTableName="image" constraintName="FK_IMAGE_ON_RECIPE"
+                                 referencedColumnNames="id" referencedTableName="recipe"/>
+    </changeSet>
+    <changeSet id="1707901700330-3" author="viet (generated)">
+        <dropForeignKeyConstraint baseTableName="recipe_images" constraintName="fk_recima_on_image"/>
+    </changeSet>
+    <changeSet id="1707901700330-4" author="viet (generated)">
+        <dropForeignKeyConstraint baseTableName="recipe_images" constraintName="fk_recima_on_recipe"/>
+    </changeSet>
+    <changeSet id="1707901700330-6" author="viet (generated)">
+        <dropTable cascadeConstraints="true" tableName="recipe_images"/>
+    </changeSet>
+
+</databaseChangeLog>

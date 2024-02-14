@@ -2,7 +2,7 @@
 
 spring:
   datasource:
-    url: jdbc:postgresql://localhost:5432/secur1ty?createDatabaseIfNotExist=true
+    url: jdbc:postgresql://localhost:5432/taste?createDatabaseIfNotExist=true
     username: postgres
     password: 12
   jpa:
@@ -17,7 +17,7 @@ spring:
 application:
   security:
     jwt:
-      secret-key: amine
+      secret-key: 404E635266556A586E3272357538782F413F4428472B4B6250645367566B5970
       expiration: 3600000
       refresh-token:
         expiration: 2592000000

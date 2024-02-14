@@ -3,10 +3,11 @@ package app.tasty.service.imp;
 import app.tasty.domain.entities.Recipe;
 import app.tasty.repository.RecipeRepository;
 import app.tasty.service.RecipeService;
+import org.springframework.stereotype.Component;
 
 import java.util.List;
 import java.util.Optional;
-
+@Component
 public class RecipeServiceImpl implements RecipeService {
     private final RecipeRepository recipeRepository;
 
@@ -16,7 +17,7 @@ public class RecipeServiceImpl implements RecipeService {
 
     @Override
     public List<Recipe> findAll() {
-        return null;
+        return recipeRepository.findAll();
     }
 
     @Override
@@ -31,11 +32,16 @@ public class RecipeServiceImpl implements RecipeService {
 
     @Override
     public Recipe update(Recipe entityDTO) {
+        // Assuming you don't have a specific update method, use save for updating
         return recipeRepository.save(entityDTO);
     }
 
     @Override
     public Optional<Recipe> delete(Long aLong) {
-        return Optional.empty();
+        Optional<Recipe> recipeOptional = recipeRepository.findById(aLong);
+        if (recipeOptional.isPresent()) {
+            recipeRepository.delete(recipeOptional.get());
+        }
+        return recipeOptional;
     }
 }

@@ -1,6 +1,6 @@
 package app.tasty.repository;
 
-import app.tasty.entities.Token;
+import app.tasty.domain.entities.Token;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 

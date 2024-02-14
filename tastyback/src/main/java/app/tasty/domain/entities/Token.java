@@ -1,6 +1,6 @@
-package app.tasty.entities;
+package app.tasty.domain.entities;
 
-import app.tasty.enums.TokenType;
+import app.tasty.domain.enums.TokenType;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;

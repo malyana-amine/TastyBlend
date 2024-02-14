@@ -1,6 +1,6 @@
 package app.tasty.service;
 
-import app.tasty.entities.User;
+import app.tasty.domain.entities.User;
 import app.tasty.user.ChangePasswordRequest;
 import app.tasty.repository.UserRepository;
 import lombok.RequiredArgsConstructor;

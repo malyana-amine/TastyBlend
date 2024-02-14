@@ -1,7 +1,7 @@
 package app.tasty.config;
 
-import app.tasty.enums.Permission;
-import app.tasty.enums.Role;
+import app.tasty.domain.enums.Permission;
+import app.tasty.domain.enums.Role;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

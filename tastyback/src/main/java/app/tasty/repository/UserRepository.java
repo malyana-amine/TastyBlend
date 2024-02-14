@@ -1,6 +1,6 @@
 package app.tasty.repository;
 
-import app.tasty.entities.User;
+import app.tasty.domain.entities.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.Optional;

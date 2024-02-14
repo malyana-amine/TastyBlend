@@ -1,6 +1,6 @@
 package app.tasty.auth;
 
-import app.tasty.enums.Role;
+import app.tasty.domain.enums.Role;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;

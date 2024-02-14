@@ -1,4 +1,4 @@
-package app.tasty.entities;
+package app.tasty.domain.entities;
 
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;

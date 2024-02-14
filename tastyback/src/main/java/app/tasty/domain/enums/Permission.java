@@ -1,4 +1,4 @@
-package app.tasty.enums;
+package app.tasty.domain.enums;
 
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;

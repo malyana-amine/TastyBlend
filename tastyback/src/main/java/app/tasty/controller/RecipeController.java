@@ -2,6 +2,8 @@ package app.tasty.controller;
 
 import app.tasty.domain.entities.Recipe;
 import app.tasty.service.RecipeService;
+import jakarta.servlet.http.HttpServletRequest;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -17,8 +19,7 @@ public class RecipeController {
     }
 
     @PostMapping("/add")
-    public Void saveRecipe(@RequestBody Recipe recipe){
-        recipeService.save(recipe);
-        return null;
+    public void saveRecipe(@RequestBody Recipe recipe, HttpServletRequest request) {
+        recipeService.saveRecipe(recipe, request);
     }
 }

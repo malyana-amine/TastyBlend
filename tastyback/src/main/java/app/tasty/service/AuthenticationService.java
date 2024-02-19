@@ -5,6 +5,7 @@ import app.tasty.auth.AuthenticationResponse;
 import app.tasty.auth.RegisterRequest;
 import app.tasty.domain.entities.User;
 import app.tasty.domain.entities.Token;
+import app.tasty.domain.enums.Role;
 import app.tasty.domain.enums.TokenType;
 import app.tasty.repository.TokenRepository;
 import app.tasty.repository.UserRepository;
@@ -37,6 +38,9 @@ public class AuthenticationService {
         .password(passwordEncoder.encode(request.getPassword()))
         .role(request.getRole())
         .build();
+    if(request.getRole() == null){
+      user.setRole(Role.USER);
+    }
     var savedUser = repository.save(user);
     var jwtToken = jwtService.generateToken(user);
     var refreshToken = jwtService.generateRefreshToken(user);

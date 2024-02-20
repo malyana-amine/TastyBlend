@@ -14,5 +14,5 @@ public interface ImageService extends CrudService<Image, Long>{
 
     java.util.List<Image> findImagesByImageUrls(List<String> imageUrls);
 
-    void saveImage(String imageUrl);
+    void saveImage(String imageUrl, Integer integer);
 }

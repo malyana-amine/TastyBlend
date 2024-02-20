@@ -34,19 +34,20 @@ public class RecipeController {
                            @ModelAttribute Recipe recipe,
                            HttpServletRequest request) throws IOException {
         // Your existing code to upload images and save the recipe
-        List<String> imageUrls = uploadImages(imageFiles);
+        recipeService.saveRecipe(recipe, request);
+        List<String> imageUrls = uploadImages(imageFiles , recipe);
 
         // Set the image URLs in the recipe entity
         List<Image> images = imageService.findImagesByImageUrls(imageUrls);
         recipe.setImages(images);
 
         // Save the recipe (assuming recipeService is properly autowired)
-        recipeService.saveRecipe(recipe, request);
+
     }
 
 
 
-    private List<String> uploadImages(List<MultipartFile> files) throws IOException {
+    private List<String> uploadImages(List<MultipartFile> files, Recipe recipe) throws IOException {
         // Get the real path of the web application's root directory
         String realPath = servletContext.getRealPath("/");
 
@@ -76,8 +77,11 @@ public class RecipeController {
             // Save the image URL to the list
             imageUrls.add(filePath);
 
+            Integer id = recipe.getId();
+            System.out.println(id);
+
             // Save the image URL to the database (assuming imageService is properly autowired)
-            imageService.saveImage(filePath);
+            imageService.saveImage(filePath,id);
         }
 
         return imageUrls;

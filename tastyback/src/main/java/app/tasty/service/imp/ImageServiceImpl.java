@@ -1,7 +1,9 @@
 package app.tasty.service.imp;
 
 import app.tasty.domain.entities.Image;
+import app.tasty.domain.entities.Recipe;
 import app.tasty.repository.ImageRepository;
+import app.tasty.repository.RecipeRepository;
 import app.tasty.service.ImageService;
 import org.springframework.stereotype.Component;
 
@@ -10,9 +12,12 @@ import java.util.Optional;
 @Component
 public class ImageServiceImpl implements ImageService {
     private final ImageRepository imageRepository;
+    private final RecipeRepository recipeRepository;
 
-    public ImageServiceImpl(ImageRepository imageRepository) {
+
+    public ImageServiceImpl(ImageRepository imageRepository, RecipeRepository recipeRepository) {
         this.imageRepository = imageRepository;
+        this.recipeRepository = recipeRepository;
     }
 
     @Override
@@ -30,9 +35,11 @@ public class ImageServiceImpl implements ImageService {
         return imageRepository.findByImageUrlIn(imageUrls);
     }
     @Override
-    public void saveImage(String imageUrl) {
+    public void saveImage(String imageUrl , Integer id) {
         Image imageEntity = new Image();
         imageEntity.setImageUrl(imageUrl);
+        Optional<Recipe> recipe = recipeRepository.findById(Long.valueOf(id));
+        imageEntity.setRecipe(recipe.get());
         imageRepository.save(imageEntity);
     }
 

@@ -26,6 +26,10 @@ public class ImageServiceImpl implements ImageService {
     }
 
     @Override
+    public List<Image> findImagesByImageUrls(List<String> imageUrls) {
+        return imageRepository.findByImageUrlIn(imageUrls);
+    }
+    @Override
     public void saveImage(String imageUrl) {
         Image imageEntity = new Image();
         imageEntity.setImageUrl(imageUrl);

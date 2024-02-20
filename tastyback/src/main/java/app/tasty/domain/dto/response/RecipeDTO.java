@@ -1,4 +1,4 @@
-package app.tasty.domain.dto;
+package app.tasty.domain.dto.response;
 
 import app.tasty.domain.entities.Image;
 import app.tasty.domain.entities.User;

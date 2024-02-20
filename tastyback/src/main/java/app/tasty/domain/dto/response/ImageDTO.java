@@ -1,4 +1,4 @@
-package app.tasty.domain.dto;
+package app.tasty.domain.dto.response;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.*;

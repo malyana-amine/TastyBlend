@@ -68,6 +68,15 @@ public class RecipeServiceImpl implements RecipeService {
     }
 
     @Override
+    public Optional<Recipe> deleteRecipeById(Long id) {
+        Optional<Recipe> recipeOptional = recipeRepository.findById(id);
+        if (recipeOptional.isPresent()) {
+            recipeRepository.delete(recipeOptional.get());
+        }
+        return recipeOptional;
+    }
+
+    @Override
     public Optional<Recipe> delete(Long aLong) {
         Optional<Recipe> recipeOptional = recipeRepository.findById(aLong);
         if (recipeOptional.isPresent()) {

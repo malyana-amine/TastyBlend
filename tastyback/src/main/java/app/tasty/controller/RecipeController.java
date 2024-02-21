@@ -16,10 +16,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.io.File;
 import java.io.IOException;
-import java.util.Collections;
-import java.util.List;
-import java.util.UUID;
-import java.util.ArrayList;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @RestController
@@ -62,5 +59,28 @@ public class RecipeController {
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
+    @GetMapping("/{id}")
+    public ResponseEntity<RecipeDTO> getRecipeById(@PathVariable Long id) {
+        Optional<Recipe> recipe = recipeService.findById(id);
+        System.out.println(recipe.get());
+        RecipeDTO recipeDTO = modelMapper.map(recipe.get() , RecipeDTO.class);
+        return new ResponseEntity<>(recipeDTO, HttpStatus.OK);
+    }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Void> deleteRecipe(@PathVariable Long id) {
+        try {
+            // Attempt to delete the recipe by ID
+            recipeService.deleteRecipeById(id);
+            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+        } catch (NoSuchElementException e) {
+            // Recipe with the given ID not found
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        } catch (Exception e) {
+            // Handle other exceptions and return an appropriate response
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
 
 }

@@ -19,6 +19,5 @@ public class Image {
 
     @ManyToOne
     @JoinColumn(name = "recipe_id")
-    @JsonIgnore
     private Recipe recipe;
 }

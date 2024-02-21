@@ -19,5 +19,6 @@ public class RecipeDTO {
     private String article;
     private String preparationSteps;
     private String ingredients;
+    private UserDTO user;
     private List<ImageDTO> images; // Use ImageDTO instead of Image
 }

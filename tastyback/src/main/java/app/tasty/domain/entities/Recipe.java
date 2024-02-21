@@ -32,10 +32,8 @@ public class Recipe {
 
     @ManyToOne
     @JoinColumn(name = "user_id")
-    @JsonIgnore
     private User user;
 
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "recipe")
-    @JsonIgnore
     private List<Image> images;
 }

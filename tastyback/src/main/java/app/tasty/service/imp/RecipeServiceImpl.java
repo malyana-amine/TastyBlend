@@ -30,6 +30,11 @@ public class RecipeServiceImpl implements RecipeService {
     }
 
     @Override
+    public List<Recipe> findAllWithImages() {
+        return recipeRepository.findAllWithImages();
+    }
+
+    @Override
     public Optional<Recipe> findById(Long aLong) {
         return recipeRepository.findById(aLong);
     }

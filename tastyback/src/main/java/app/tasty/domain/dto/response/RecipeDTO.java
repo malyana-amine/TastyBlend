@@ -3,10 +3,6 @@ package app.tasty.domain.dto.response;
 import app.tasty.domain.entities.Image;
 import app.tasty.domain.entities.User;
 import com.fasterxml.jackson.annotation.JsonInclude;
-import jakarta.persistence.CascadeType;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToOne;
-import jakarta.persistence.OneToMany;
 import lombok.*;
 
 import java.util.List;
@@ -23,6 +19,5 @@ public class RecipeDTO {
     private String article;
     private String preparationSteps;
     private String ingredients;
-    private User user;
-    private List<Image> images;
+    private List<ImageDTO> images; // Use ImageDTO instead of Image
 }

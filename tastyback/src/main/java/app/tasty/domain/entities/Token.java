@@ -2,16 +2,15 @@ package app.tasty.domain.entities;
 
 import app.tasty.domain.enums.TokenType;
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
-@Data
+@Setter
+@Getter
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
+@ToString(exclude = "recipe")
 public class Token {
 
   @Id

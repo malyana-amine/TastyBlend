@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+                      http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.24.xsd"
+        objectQuotingStrategy="QUOTE_ONLY_RESERVED_WORDS">
+    <changeSet id="1708611158622-1" author="itroa (generated)">
+        <createTable tableName="friend_request">
+            <column autoIncrement="true" name="id" type="BIGINT">
+                <constraints nullable="false" primaryKey="true" primaryKeyName="pk_friendrequest"/>
+            </column>
+            <column name="sender_id" type="INT"/>
+            <column name="receiver_id" type="INT"/>
+            <column name="request_status" type="SMALLINT"/>
+        </createTable>
+    </changeSet>
+    <changeSet id="1708611158622-2" author="itroa (generated)">
+        <addForeignKeyConstraint baseColumnNames="receiver_id" baseTableName="friend_request"
+                                 constraintName="FK_FRIENDREQUEST_ON_RECEIVER" referencedColumnNames="id"
+                                 referencedTableName="_user"/>
+    </changeSet>
+    <changeSet id="1708611158622-3" author="itroa (generated)">
+        <addForeignKeyConstraint baseColumnNames="sender_id" baseTableName="friend_request"
+                                 constraintName="FK_FRIENDREQUEST_ON_SENDER" referencedColumnNames="id"
+                                 referencedTableName="_user"/>
+    </changeSet>
+
+</databaseChangeLog>

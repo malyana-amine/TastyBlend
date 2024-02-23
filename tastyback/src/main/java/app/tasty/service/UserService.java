@@ -40,4 +40,9 @@ public class UserService {
                 .orElseThrow(() -> new IllegalStateException("User not found with email: " + email));
     }
 
+    public User findById(Long id){
+        return repository.findById(id)
+                .orElseThrow(() -> new IllegalStateException("User not found with id: " + id));
+    }
+
 }

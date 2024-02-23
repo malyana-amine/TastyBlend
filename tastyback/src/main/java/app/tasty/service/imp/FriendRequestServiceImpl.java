@@ -22,6 +22,7 @@ public class FriendRequestServiceImpl implements FriendRequestService {
     private final JwtService jwtService;
     private final UserService userService;
     ModelMapper modelMapper = new ModelMapper();
+    FriendRequestRequest friendRequestRequest = new FriendRequestRequest();
 
     public FriendRequestServiceImpl(FriendRequestRepository friendRequestRepository, JwtService jwtService, UserService userService) {
         this.friendRequestRepository = friendRequestRepository;
@@ -44,6 +45,12 @@ public class FriendRequestServiceImpl implements FriendRequestService {
         friendRequestRepository.save(entityDTO);
         return friendRequestRepository.save(entityDTO);
     }
+    private boolean areAlreadyFriends(User user, User otherUser) {
+        return friendRequestRepository.existsBySenderAndReceiverAndRequestStatus(
+                user, otherUser, RequestStatus.ACCEPTED)
+                || friendRequestRepository.existsBySenderAndReceiverAndRequestStatus(
+                otherUser, user, RequestStatus.ACCEPTED);
+    }
 
     @Override
     public FriendRequest saveReq(Long id , HttpServletRequest request){
@@ -58,7 +65,15 @@ public class FriendRequestServiceImpl implements FriendRequestService {
         System.out.println(userEmail + "sqdfqsdfqsdfqsdfqsdfqsdfqsdfqsdfqsdfqsdfsqdfqsdfqsdfqsdf");
         User user = userService.findByEmail(userEmail);
         User user1 = userService.findById(id);
-        FriendRequestRequest friendRequestRequest = new FriendRequestRequest();
+        if (areAlreadyFriends(user, user1)) {
+            // Users are already friends, you can handle this case accordingly
+            return null;
+        }
+        if (friendRequestRepository.existsBySenderAndReceiverAndRequestStatus(user, user1, RequestStatus.PENDING)) {
+            // Friend request already exists, you can handle this case accordingly
+            return null;
+        }
+
         friendRequestRequest.setSender(user);
         friendRequestRequest.setReceiver(user1);
         friendRequestRequest.setRequestStatus(RequestStatus.PENDING);

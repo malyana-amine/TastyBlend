@@ -84,6 +84,35 @@ public class FriendRequestServiceImpl implements FriendRequestService {
     }
 
     @Override
+    public List<FriendRequest> getAllRequestSender(HttpServletRequest request) {
+        final String authHeader = request.getHeader(HttpHeaders.AUTHORIZATION);
+        final String refreshToken;
+        final String userEmail;
+        if (authHeader == null || !authHeader.startsWith("Bearer ")) {
+            return null;
+        }
+        refreshToken = authHeader.substring(7);
+        userEmail = jwtService.extractUsername(refreshToken);
+        System.out.println(userEmail + "sqdfqsdfqsdfqsdfqsdfqsdfqsdfqsdfqsdfqsdfsqdfqsdfqsdfqsdf");
+        User user = userService.findByEmail(userEmail);
+        return friendRequestRepository.findAllBySenderAndRequestStatus(user, RequestStatus.PENDING);
+    }
+
+    @Override
+    public List<FriendRequest> getAllRequestReciver(HttpServletRequest request) {
+        final String authHeader = request.getHeader(HttpHeaders.AUTHORIZATION);
+        final String refreshToken;
+        final String userEmail;
+        if (authHeader == null || !authHeader.startsWith("Bearer ")) {
+            return null;
+        }
+        refreshToken = authHeader.substring(7);
+        userEmail = jwtService.extractUsername(refreshToken);
+        System.out.println(userEmail + "sqdfqsdfqsdfqsdfqsdfqsdfqsdfqsdfqsdfqsdfsqdfqsdfqsdfqsdf");
+        User user = userService.findByEmail(userEmail);
+        return friendRequestRepository.findAllByReceiverAndRequestStatus(user, RequestStatus.PENDING);
+    }
+    @Override
     public FriendRequest update(FriendRequest entityDTO) {
         return null;
     }
@@ -91,5 +120,25 @@ public class FriendRequestServiceImpl implements FriendRequestService {
     @Override
     public Optional<FriendRequest> delete(Long aLong) {
         return Optional.empty();
+    }
+
+    @Override
+    public FriendRequest acceptRequest(Long requestId) {
+        FriendRequest friendRequest = friendRequestRepository.findById(requestId).orElse(null);
+        if (friendRequest != null) {
+            friendRequest.setRequestStatus(RequestStatus.ACCEPTED);
+            return friendRequestRepository.save(friendRequest);
+        }
+        return null;
+    }
+
+    @Override
+    public FriendRequest rejectRequest(Long requestId) {
+        FriendRequest friendRequest = friendRequestRepository.findById(requestId).orElse(null);
+        if (friendRequest != null) {
+            friendRequest.setRequestStatus(RequestStatus.REJECTED);
+            return friendRequestRepository.save(friendRequest);
+        }
+        return null;
     }
 }

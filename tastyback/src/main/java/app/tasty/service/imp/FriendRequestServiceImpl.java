@@ -123,22 +123,51 @@ public class FriendRequestServiceImpl implements FriendRequestService {
     }
 
     @Override
-    public FriendRequest acceptRequest(Long requestId) {
+    public FriendRequest acceptRequest(Long requestId, HttpServletRequest request) {
         FriendRequest friendRequest = friendRequestRepository.findById(requestId).orElse(null);
-        if (friendRequest != null) {
+
+        final String authHeader = request.getHeader(HttpHeaders.AUTHORIZATION);
+        final String refreshToken;
+        final String userEmail;
+        if (authHeader == null || !authHeader.startsWith("Bearer ")) {
+            throw new IllegalArgumentException("Authorization header is missing or invalid");
+        }
+        refreshToken = authHeader.substring(7);
+        userEmail = jwtService.extractUsername(refreshToken);
+        System.out.println(userEmail + "sqdfqsdfqsdfqsdfqsdfqsdfqsdfqsdfqsdfqsdfsqdfqsdfqsdfqsdf");
+
+        User user = userService.findByEmail(userEmail);
+
+        if (friendRequest != null && friendRequest.getReceiver() == user && friendRequest.getRequestStatus() == RequestStatus.PENDING) {
             friendRequest.setRequestStatus(RequestStatus.ACCEPTED);
             return friendRequestRepository.save(friendRequest);
+        } else {
+            throw new IllegalArgumentException("Invalid friend request or sender");
         }
-        return null;
     }
 
+
     @Override
-    public FriendRequest rejectRequest(Long requestId) {
+    public FriendRequest rejectRequest(Long requestId , HttpServletRequest request) {
+
         FriendRequest friendRequest = friendRequestRepository.findById(requestId).orElse(null);
-        if (friendRequest != null) {
+        final String authHeader = request.getHeader(HttpHeaders.AUTHORIZATION);
+        final String refreshToken;
+        final String userEmail;
+        if (authHeader == null || !authHeader.startsWith("Bearer ")) {
+            throw new IllegalArgumentException("Authorization header is missing or invalid");
+        }
+        refreshToken = authHeader.substring(7);
+        userEmail = jwtService.extractUsername(refreshToken);
+        System.out.println(userEmail + "sqdfqsdfqsdfqsdfqsdfqsdfqsdfqsdfqsdfqsdfsqdfqsdfqsdfqsdf");
+
+        User user = userService.findByEmail(userEmail);
+
+        if (friendRequest != null && friendRequest.getReceiver() == user && friendRequest.getRequestStatus() == RequestStatus.PENDING) {
             friendRequest.setRequestStatus(RequestStatus.REJECTED);
             return friendRequestRepository.save(friendRequest);
+        }else {
+            throw new IllegalArgumentException("Invalid friend request or sender");
         }
-        return null;
     }
 }

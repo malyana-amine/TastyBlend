@@ -62,14 +62,14 @@ public class FriendRequestController {
         }
     }
     @PutMapping("/accept/{requestId}")
-    public FriendRequest acceptRequest(@PathVariable Long requestId) {
-        friendRequestService.acceptRequest(requestId);
+    public FriendRequest acceptRequest(@PathVariable Long requestId,HttpServletRequest request) {
+        friendRequestService.acceptRequest(requestId,request);
         return null;
     }
 
     @PutMapping("/reject/{requestId}")
-    public FriendRequest rejectRequest(@PathVariable Long requestId) {
-        friendRequestService.rejectRequest(requestId);
+    public FriendRequest rejectRequest(@PathVariable Long requestId, HttpServletRequest request) {
+        friendRequestService.rejectRequest(requestId ,request);
         return null;
     }
 }

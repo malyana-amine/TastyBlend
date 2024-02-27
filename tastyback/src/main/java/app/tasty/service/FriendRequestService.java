@@ -15,7 +15,7 @@ public interface FriendRequestService extends CrudService<FriendRequest, Long>{
 
     List<FriendRequest> getAllRequestReciver(HttpServletRequest request);
 
-    FriendRequest acceptRequest(Long requestId);
+    FriendRequest acceptRequest(Long requestId, HttpServletRequest request);
 
-    FriendRequest rejectRequest(Long requestId);
+    FriendRequest rejectRequest(Long requestId , HttpServletRequest request);
 }

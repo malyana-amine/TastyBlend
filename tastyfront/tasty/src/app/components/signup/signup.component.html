@@ -1,0 +1,40 @@
+<div class="align body">
+    <div class="grid">
+      <form (ngSubmit)="registerUser()" class="form register">
+        <div class="form__field">
+          <label for="register__firstname"><span class="hidden">First Name</span></label>
+          <input autocomplete="given-name" id="register__firstname" type="text" name="firstname" [(ngModel)]="user.firstname" class="form__input" placeholder="First Name" required>
+        </div>
+  
+        <div class="form__field">
+          <label for="register__lastname"><span class="hidden">Last Name</span></label>
+          <input autocomplete="family-name" id="register__lastname" type="text" name="lastname" [(ngModel)]="user.lastname" class="form__input" placeholder="Last Name" required>
+        </div>
+  
+        <div class="form__field">
+          <label for="register__email"><span class="hidden">Email</span></label>
+          <input autocomplete="email" id="register__email" type="email" name="email" [(ngModel)]="user.email" class="form__input" placeholder="Email" required>
+        </div>
+  
+        <div class="form__field">
+          <label for="register__password"><span class="hidden">Password</span></label>
+          <input id="register__password" type="password" name="password" [(ngModel)]="user.password" class="form__input" placeholder="Password" required>
+        </div>
+  
+        <div class="form__field">
+          <input type="submit" value="Sign Up">
+        </div>
+      </form>
+  
+      <p class="text--center">Already a member? <a href="#">Sign in now</a>
+        <svg class="icon">
+          <use xlink:href="#icon-arrow-right"></use>
+        </svg>
+      </p>
+    </div>
+  
+    <svg xmlns="http://www.w3.org/2000/svg" class="icons">
+      <!-- Define your icon symbols here -->
+    </svg>
+  </div>
+  

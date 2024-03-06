@@ -1,16 +1,14 @@
-// register.component.ts
-
 import { Component } from '@angular/core';
-import { User } from 'src/app/models/User';
 import { AuthService } from 'src/app/services/authService/auth.service';
 
 @Component({
-  selector: 'app-register',
-  templateUrl: './register.component.html',
-  styleUrls: ['./register.component.css'],
+  selector: 'app-signup',
+  templateUrl: './signup.component.html',
+  styleUrls: ['./signup.component.css']
 })
-export class RegisterComponent {
-user: User = new User();
+export class SignupComponent {
+
+  user: any;
   // user: any;
 
   constructor(private registrationService: AuthService) {}

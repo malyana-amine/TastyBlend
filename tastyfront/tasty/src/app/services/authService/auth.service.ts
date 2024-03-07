@@ -37,14 +37,12 @@ export class AuthService {
   logout(): void {
     this.setAuthenticated(false);
     this.setAuthToken(null);
-    // Additional logout logic if needed
   }
 
   isLoggedIn(): boolean {
     return this.isAuthenticated;
   }
 
-  // Retrieve the authentication token
   getToken(): string | null {
     return this.authToken;
   }

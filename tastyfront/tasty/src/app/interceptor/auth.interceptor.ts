@@ -12,7 +12,6 @@ export class AuthInterceptor implements HttpInterceptor {
     const token = this.authService.getToken();
 
     if (token) {
-      // Clone the request and add the authentication header
       const authRequest = request.clone({
         setHeaders: {
           Authorization: `Bearer ${token}`,
@@ -20,7 +19,6 @@ export class AuthInterceptor implements HttpInterceptor {
       });
       return next.handle(authRequest);
     } else {
-      // If no token, proceed with the original request
       return next.handle(request);
     }
   }

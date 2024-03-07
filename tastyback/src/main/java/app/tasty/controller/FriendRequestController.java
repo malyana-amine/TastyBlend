@@ -66,7 +66,6 @@ public class FriendRequestController {
         friendRequestService.acceptRequest(requestId,request);
         return null;
     }
-
     @PutMapping("/reject/{requestId}")
     public FriendRequest rejectRequest(@PathVariable Long requestId, HttpServletRequest request) {
         friendRequestService.rejectRequest(requestId ,request);

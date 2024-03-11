@@ -1,14 +1,8 @@
-
-
-export class User {
-    firstname: string;
-    lastname: string;
+export class LoginReq {
     email: string;
     password: string;
   
     constructor() {
-      this.firstname = '';
-      this.lastname = '';
       this.email = '';
       this.password = '';
     }

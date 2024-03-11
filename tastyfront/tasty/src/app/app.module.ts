@@ -8,8 +8,10 @@ import { TerrazzoBackgroundComponent } from './layout/terrazzo-background/terraz
 import { FormsModule } from '@angular/forms';
 import { RegisterComponent } from './components/register/register.component';
 import { SignupComponent } from './components/signup/signup.component';
-import { HttpClientModule } from '@angular/common/http';
+import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
 import { AuthService } from './services/authService/auth.service';
+import { AuthInterceptor } from './interceptor/auth.interceptor';
+import { LoginComponent } from './components/login/login.component';
 
 @NgModule({
   declarations: [
@@ -17,7 +19,8 @@ import { AuthService } from './services/authService/auth.service';
     TestComponent,
     TerrazzoBackgroundComponent,
     RegisterComponent,
-    SignupComponent
+    SignupComponent,
+    LoginComponent
   ],
   imports: [
     BrowserModule,
@@ -26,7 +29,7 @@ import { AuthService } from './services/authService/auth.service';
     HttpClientModule,
     
   ],
-  providers: [AuthService],
+  providers: [AuthService,{ provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true },],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

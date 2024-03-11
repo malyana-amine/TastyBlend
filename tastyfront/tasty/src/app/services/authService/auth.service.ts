@@ -1,7 +1,8 @@
 import { Injectable } from '@angular/core';
 import { Observable, of } from 'rxjs';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { tap, catchError } from 'rxjs/operators';
+import { LoginReq } from 'src/app/models/LoginReq';
 
 @Injectable({
   providedIn: 'root'
@@ -20,8 +21,11 @@ export class AuthService {
     return this.http.post(`${this.apiUrl}/register`, user);
   }
 
-  login(credentials: any): Observable<any> {
-    return this.http.post<any>(`${this.apiUrl}/login`, credentials).pipe(
+  login(credentials: LoginReq): Observable<any> {
+    const headers = new HttpHeaders({ 'Content-Type': 'application/json' });
+    const body = JSON.stringify(credentials);
+
+    return this.http.post<any>(`${this.apiUrl}/authenticate`, body, { headers }).pipe(
       tap(response => {
         this.setAuthenticated(true);
         this.setAuthToken(response.token);
@@ -32,6 +36,8 @@ export class AuthService {
       })
     );
   }
+  
+  
   
 
   logout(): void {

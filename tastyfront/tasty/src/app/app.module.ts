@@ -10,7 +10,6 @@ import { RegisterComponent } from './components/register/register.component';
 import { SignupComponent } from './components/signup/signup.component';
 import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
 import { AuthService } from './services/authService/auth.service';
-import { AuthInterceptor } from './interceptor/auth.interceptor';
 import { LoginComponent } from './components/login/login.component';
 
 @NgModule({
@@ -29,7 +28,7 @@ import { LoginComponent } from './components/login/login.component';
     HttpClientModule,
     
   ],
-  providers: [AuthService,{ provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true },],
+  providers: [AuthService,],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

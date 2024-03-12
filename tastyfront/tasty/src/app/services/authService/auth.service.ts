@@ -1,8 +1,11 @@
 import { Injectable } from '@angular/core';
-import { Observable, of } from 'rxjs';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { tap, catchError } from 'rxjs/operators';
+import { Observable, firstValueFrom } from 'rxjs';
+import { HttpClient } from '@angular/common/http';
+import { tap } from 'rxjs/operators';
 import { LoginReq } from 'src/app/models/LoginReq';
+import { Router } from '@angular/router';
+import { AppStateService } from '../appState/app-state.service';
+import { jwtDecode } from 'jwt-decode';
 
 @Injectable({
   providedIn: 'root'
@@ -11,55 +14,71 @@ export class AuthService {
 
   private apiUrl = 'http://127.0.0.1:8080/api/v1/auth';
 
-  // Assume you store the authentication status and token in variables
-  private isAuthenticated = false;
-  private authToken: string | null = null;
+  private token: string | null = null;
+  private roles: string[] = [];
 
-  constructor(private http: HttpClient) {}
+  constructor(private router: Router, private http: HttpClient, private appState: AppStateService) {
+    this.token = localStorage.getItem('token');
+  }
 
   registerUser(user: any): Observable<any> {
     return this.http.post(`${this.apiUrl}/register`, user);
   }
 
-  login(credentials: LoginReq): Observable<any> {
-    const headers = new HttpHeaders({ 'Content-Type': 'application/json' });
-    const body = JSON.stringify(credentials);
+  async login(user: LoginReq): Promise<boolean> {
+    try {
+      const loginResponse = await firstValueFrom(this.http.post<any>(`${this.apiUrl}/authenticate`, user));
 
-    return this.http.post<any>(`${this.apiUrl}/authenticate`, body, { headers }).pipe(
-      tap(response => {
-        this.setAuthenticated(true);
-        this.setAuthToken(response.token);
-      }),
-      catchError(error => {
-        console.error('Login failed', error);
-        return of(null);
-      })
-    );
-  }
-  
-  
-  
+      if (!loginResponse || !loginResponse.access_token || !loginResponse.refresh_token) {
+        throw new Error("Invalid login response: Tokens not found");
+      }
 
-  logout(): void {
-    this.setAuthenticated(false);
-    this.setAuthToken(null);
-  }
+      const accessToken = loginResponse.access_token;
+      const refreshToken = loginResponse.refresh_token;
 
-  isLoggedIn(): boolean {
-    return this.isAuthenticated;
-  }
+      localStorage.setItem('token', accessToken);
+      localStorage.setItem('refreshToken', refreshToken);
 
-  getToken(): string | null {
-    return this.authToken;
-  }
+      this.token = accessToken;
 
-  // Helper method to set the authentication status
-  private setAuthenticated(status: boolean): void {
-    this.isAuthenticated = status;
+      const decodedJwt: any = jwtDecode(accessToken);
+      this.roles = decodedJwt.roles || [];
+
+      this.appState.setAuthState({
+        isAuthenticated: true,
+        username: decodedJwt.sub,
+        roles: this.roles,
+        token: accessToken
+      });
+
+      return true;
+    } catch (error) {
+      console.error(error);
+      throw new Error("Login failed. Please check your credentials.");
+    }
   }
 
-  // Helper method to set the authentication token
-  private setAuthToken(token: string | null): void {
-    this.authToken = token;
+  logout() {
+    localStorage.removeItem('token');
+    localStorage.removeItem('refreshToken');
+
+    this.token = null;
+
+    this.appState.setAuthState({
+      isAuthenticated: false,
+      username: undefined,
+      roles: [],
+      token: undefined
+    });
+
+    this.router.navigateByUrl('/login');
+  }
+
+  isAuthenticated(): boolean {
+    return !!this.token;
+  }
+
+  getUserRoles(): string[] {
+    return this.roles;
   }
 }

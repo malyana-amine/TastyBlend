@@ -5,28 +5,24 @@ import {
   HttpHandler,
   HttpEvent,
 } from '@angular/common/http';
-import { Observable } from 'rxjs';
+import { Observable, finalize } from 'rxjs';
 import { AuthService } from '../services/authService/auth.service';
+import { LoadingService } from '../services/Loading/loading.service';
 
 @Injectable()
-export class AuthInterceptor implements HttpInterceptor {
-  constructor(private authService: AuthService) {}
+export class AppHttpInterceptor implements HttpInterceptor {
 
-  intercept(
-    request: HttpRequest<any>,
-    next: HttpHandler
-  ): Observable<HttpEvent<any>> {
-    const token = this.authService.getToken();
+  constructor(private loadingService:LoadingService) {}
 
-    if (token) {
-      const authRequest = request.clone({
-        setHeaders: {
-          Authorization: `Bearer ${token}`,
-        },
-      });
-      return next.handle(authRequest);
-    } else {
-      return next.handle(request);
-    }
+  intercept(request: HttpRequest<unknown>, next: HttpHandler): Observable<HttpEvent<unknown>> {
+    this.loadingService.showLoadingSpinner();
+    let req = request.clone({
+      headers : request.headers.set("Authorization","Bearer JWT")
+    });
+    return next.handle(req).pipe(
+      finalize(()=>{
+        this.loadingService.hideLoadingSpinner();
+      })
+    );
   }
 }

@@ -14,18 +14,16 @@ export class LoginComponent {
   constructor(private authService: AuthService, private router: Router) {}
 
   login(): void {
-    this.authService.login(this.userReq).subscribe(
-      response => {
-        if (response) {
-          this.router.navigate(['/test']);
-        } else {
-          // Handle login failure
-        }
-      },
-      error => {
+    this.authService.login(this.userReq)
+      .then(response => {
+        // ... existing code
+        this.router.navigate(['/test']);
+      })
+      .catch(error => {
         console.error('Login failed', error);
         // Handle error or display a message
-      }
-    );
+      });
   }
+  
+  
 }

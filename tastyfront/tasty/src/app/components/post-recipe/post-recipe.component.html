@@ -1,0 +1,25 @@
+<div class="container mt-5">
+    <div class="card">
+        <div class="card-body">
+            <form (ngSubmit)="onSubmit()" enctype="multipart/form-data">
+                <div class="mb-3">
+                    <textarea name="article" class="form-control" placeholder="Article" [(ngModel)]="formData.article"></textarea>
+                </div>
+                <div class="mb-3">
+                    <textarea name="preparationSteps" class="form-control" placeholder="Preparation Steps" [(ngModel)]="formData.preparationSteps"></textarea>
+                </div>
+                <div class="mb-3">
+                    <textarea name="ingredients" class="form-control" placeholder="Ingredients" [(ngModel)]="formData.ingredients"></textarea>
+                </div>
+                <div class="mb-3">
+                    <input type="file" class="custom-file-input" id="fileInput" (change)="onFileChange($event)" multiple>
+                    <label for="fileInput" class="btn-1">Upload Image(s)</label>
+                </div>
+                <div id="imagePreview">
+                    <img *ngFor="let image of selectedImages" [src]="image" style="max-width: 200px; margin-right: 10px;">
+                </div>
+                <button type="submit" class="btn btn-primary">Post</button>
+            </form>
+        </div>
+    </div>
+</div>

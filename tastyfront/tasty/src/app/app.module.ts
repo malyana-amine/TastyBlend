@@ -1,4 +1,4 @@
-import { NgModule } from '@angular/core';
+import { Component, NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 
 import { AppRoutingModule } from './app-routing.module';
@@ -11,6 +11,8 @@ import { SignupComponent } from './components/signup/signup.component';
 import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
 import { AuthService } from './services/authService/auth.service';
 import { LoginComponent } from './components/login/login.component';
+import { CommonModule } from '@angular/common';
+import { PostRecipeComponent } from './components/post-recipe/post-recipe.component'; // Import PostRecipeComponent here
 
 @NgModule({
   declarations: [
@@ -19,16 +21,17 @@ import { LoginComponent } from './components/login/login.component';
     TerrazzoBackgroundComponent,
     RegisterComponent,
     SignupComponent,
-    LoginComponent
+    LoginComponent,
+    PostRecipeComponent // Add PostRecipeComponent to the declarations array
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     FormsModule,
     HttpClientModule,
-    
+    CommonModule,
   ],
-  providers: [AuthService,],
+  providers: [AuthService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

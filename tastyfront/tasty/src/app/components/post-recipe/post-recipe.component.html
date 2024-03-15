@@ -11,13 +11,15 @@
                 <div class="mb-3">
                     <textarea name="ingredients" class="form-control" placeholder="Ingredients" [(ngModel)]="formData.ingredients"></textarea>
                 </div>
-                <div class="mb-3">
-                    <input type="file" class="custom-file-input" id="fileInput" (change)="onFileChange($event)" multiple>
-                    <label for="fileInput" class="btn-1">Upload Image(s)</label>
-                </div>
-                <div id="imagePreview">
-                    <img *ngFor="let image of selectedImages" [src]="image" style="max-width: 200px; margin-right: 10px;">
-                </div>
+                <div class="mb-3" style="display: flex; align-items: center;">
+                    <div style="flex: 1;">
+                        <input type="file" class="custom-file-input" id="fileInput" (change)="onFileChange($event)" multiple>
+                        <label for="fileInput" class="btn-1">Upload Image(s)</label>
+                    </div>
+                    <div id="imagePreview">
+                        <img *ngFor="let image of selectedImages" [src]="image" style="width: 50px; height: 50px; margin-right: 10px;">
+                    </div>
+                </div>                
                 <button type="submit" class="btn btn-primary">Post</button>
             </form>
         </div>

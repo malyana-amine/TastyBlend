@@ -1,4 +1,8 @@
+import { HttpHeaders } from '@angular/common/http';
 import { Component } from '@angular/core';
+import { Recipe } from 'src/app/models/recipe';
+import { AuthService } from 'src/app/services/authService/auth.service';
+import { RecipeService } from 'src/app/services/recipe/recipe.service';
 
 @Component({
   selector: 'app-post-recipe',
@@ -7,14 +11,36 @@ import { Component } from '@angular/core';
 })
 export class PostRecipeComponent {
 
-  formData: any = {};
-  selectedImages: string[] = [];
+  formData: Recipe = { article: '', preparationSteps: '', ingredients: '', images: [] };
+  selectedImages: File[] = [];
 
-  constructor() {}
+  constructor(
+    private recipeService: RecipeService,
+    private authService: AuthService // Inject AuthService
+  ) {}
 
   onSubmit() {
-    // Handle form submission here
-    console.log(this.formData);
+    const authToken = this.authService.getAuthToken();
+    const headers = new HttpHeaders().set('Authorization', `Bearer ${authToken}`);
+
+    const formData = new FormData();
+    formData.append('article', this.formData.article);
+    formData.append('preparationSteps', this.formData.preparationSteps);
+    formData.append('ingredients', this.formData.ingredients);
+    
+    for (let i = 0; i < this.selectedImages.length; i++) {
+      formData.append('imageUrl', this.selectedImages[i]);
+    }    
+    this.recipeService.saveRecipe(formData, headers).subscribe(
+      (response) => {
+        console.log('Recipe saved successfully:', response);
+        this.formData = { article: '', preparationSteps: '', ingredients: '', images: [] };
+        this.selectedImages = [];
+      },
+      (error) => {
+        console.error('Error saving recipe:', error);
+      }
+    );
   }
 
   onFileChange(event: any) {

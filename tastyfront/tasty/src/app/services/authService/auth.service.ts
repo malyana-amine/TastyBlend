@@ -44,10 +44,6 @@ export class AuthService {
       const decodedJwt: any = jwtDecode(accessToken);
       this.roles = decodedJwt.roles || [];
 
-      
-      console.log(this.roles);
-      console.log(decodedJwt);
-      
       this.appState.setAuthState({
         isAuthenticated: true,
         username: decodedJwt.sub,
@@ -84,5 +80,9 @@ export class AuthService {
 
   getUserRoles(): string[] {
     return this.roles;
+  }
+
+  getAuthToken(): string | null {
+    return this.token;
   }
 }

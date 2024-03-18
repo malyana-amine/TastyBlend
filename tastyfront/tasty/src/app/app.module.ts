@@ -13,25 +13,27 @@ import { AuthService } from './services/authService/auth.service';
 import { LoginComponent } from './components/login/login.component';
 import { CommonModule } from '@angular/common';
 import { PostRecipeComponent } from './components/post-recipe/post-recipe.component'; // Import PostRecipeComponent here
+import { PostComponent } from './components/post/post.component';
 
 @NgModule({
-  declarations: [
-    AppComponent,
-    TestComponent,
-    TerrazzoBackgroundComponent,
-    RegisterComponent,
-    SignupComponent,
-    LoginComponent,
-    PostRecipeComponent // Add PostRecipeComponent to the declarations array
-  ],
-  imports: [
-    BrowserModule,
-    AppRoutingModule,
-    FormsModule,
-    HttpClientModule,
-    CommonModule,
-  ],
-  providers: [AuthService],
-  bootstrap: [AppComponent]
+    declarations: [
+        AppComponent,
+        TestComponent,
+        TerrazzoBackgroundComponent,
+        RegisterComponent,
+        SignupComponent,
+        LoginComponent,
+        PostRecipeComponent // Add PostRecipeComponent to the declarations array
+    ],
+    providers: [AuthService],
+    bootstrap: [AppComponent],
+    imports: [
+        BrowserModule,
+        AppRoutingModule,
+        FormsModule,
+        HttpClientModule,
+        CommonModule,
+        PostComponent
+    ]
 })
 export class AppModule { }

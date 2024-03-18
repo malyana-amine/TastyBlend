@@ -1,27 +1,25 @@
 <div class="container mt-5">
-    <div class="card">
-        <div class="card-body">
-            <form (ngSubmit)="onSubmit()" enctype="multipart/form-data">
-                <div class="mb-3">
-                    <textarea name="article" class="form-control" placeholder="Article" [(ngModel)]="formData.article"></textarea>
-                </div>
-                <div class="mb-3">
-                    <textarea name="preparationSteps" class="form-control" placeholder="Preparation Steps" [(ngModel)]="formData.preparationSteps"></textarea>
-                </div>
-                <div class="mb-3">
-                    <textarea name="ingredients" class="form-control" placeholder="Ingredients" [(ngModel)]="formData.ingredients"></textarea>
-                </div>
-                <div class="mb-3" style="display: flex; align-items: center;">
-                    <div style="flex: 1;">
-                        <input type="file" class="custom-file-input" id="fileInput" (change)="onFileChange($event)" multiple>
-                        <label for="fileInput" class="btn-1">Upload Image(s)</label>
-                    </div>
-                    <div id="imagePreview">
-                        <img *ngFor="let image of selectedImages" [src]="image" style="width: 50px; height: 50px; margin-right: 10px;">
-                    </div>
-                </div>                
-                <button type="submit" class="btn btn-primary">Post</button>
-            </form>
+  <div class="card recipe-card">  <div class="card-body">
+      <form (ngSubmit)="onSubmit()" enctype="multipart/form-data">
+        <div class="form-group">
+          <label for="article" class="form-label">Article</label>
+          <textarea name="article" class="form-control" id="article" [(ngModel)]="formData.article" rows="5"></textarea>
         </div>
+        <div class="form-group">
+          <label for="preparationSteps" class="form-label">Preparation Steps</label>
+          <textarea name="preparationSteps" class="form-control" id="preparationSteps" [(ngModel)]="formData.preparationSteps" rows="5"></textarea>
+        </div>
+        <div class="form-group">
+          <label for="ingredients" class="form-label">Ingredients</label>
+          <textarea name="ingredients" class="form-control" id="ingredients" [(ngModel)]="formData.ingredients" rows="5"></textarea>
+        </div>
+        <div class="form-group d-flex align-items-center">
+          <div class="custom-file">
+            <input type="file" class="custom-file-input" id="fileInput" (change)="onFileChange($event)" multiple>
+            <label for="fileInput" class="custom-file-label">Choose Image(s)</label> </div>
+          <div id="imagePreview" class="ms-3"> <img *ngFor="let image of selectedImages" [src]="image" style="width: 50px; height: 50px;" alt="Uploaded Image"> </div>
+        </div>
+        <button type="submit" class="btn btn-primary">Post Recipe</button> </form>
     </div>
+  </div>
 </div>

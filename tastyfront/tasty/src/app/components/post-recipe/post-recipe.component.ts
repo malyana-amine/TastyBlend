@@ -53,7 +53,7 @@ export class PostRecipeComponent {
         const reader = new FileReader();
 
         reader.onload = (e: any) => {
-          this.selectedImages.push(file);
+          this.selectedImages.push(file); // Store the File object directly
         };
 
         reader.readAsDataURL(file);
@@ -61,3 +61,8 @@ export class PostRecipeComponent {
     }
   }
 }
+
+
+
+
+

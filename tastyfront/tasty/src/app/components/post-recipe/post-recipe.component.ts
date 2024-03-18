@@ -29,7 +29,7 @@ export class PostRecipeComponent {
     formData.append('ingredients', this.formData.ingredients);
     
     for (let i = 0; i < this.selectedImages.length; i++) {
-      formData.append('imageUrl', this.selectedImages[i]);
+      formData.append('imageUrl', this.selectedImages[i]); // Keep 'imageUrl' to match backend
     }    
     this.recipeService.saveRecipe(formData, headers).subscribe(
       (response) => {
@@ -53,7 +53,7 @@ export class PostRecipeComponent {
         const reader = new FileReader();
 
         reader.onload = (e: any) => {
-          this.selectedImages.push(e.target.result);
+          this.selectedImages.push(file);
         };
 
         reader.readAsDataURL(file);

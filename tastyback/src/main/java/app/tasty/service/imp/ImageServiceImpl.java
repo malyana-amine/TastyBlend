@@ -66,11 +66,11 @@ public class ImageServiceImpl implements ImageService {
 
     @Override
     public List<String> uploadImages(List<MultipartFile> files, Recipe recipe) throws IOException {
-        // Get the real path of the web application's root directory
-        String realPath = servletContext.getRealPath("/");
+        // Get the root directory of your project
+        String rootDirectory = System.getProperty("user.dir");
 
-        // Construct the full file path within a subdirectory named "images" in the root directory
-        String directoryPath = realPath + File.separator + "images";
+        // Construct the directory path relative to the root directory
+        String directoryPath = rootDirectory + File.separator + "images";
 
         // Create the "images" directory if it doesn't exist
         File directory = new File(directoryPath);
@@ -89,23 +89,30 @@ public class ImageServiceImpl implements ImageService {
             // Create the File object for the image
             File imageFile = new File(filePath);
 
+            System.out.println("fqsdfsdfqsdfqsfqsdf");
+            System.out.println(imageFile);
+            System.out.println("fqsdfsdfqsdfqsfqsdf");
+
             // Transfer the uploaded file to the specified path
             file.transferTo(imageFile);
 
-            // Save the image URL to the list
-            imageUrls.add(filePath);
+            // Save the relative image path to the list
+            String relativePath = filePath.substring(rootDirectory.length() + 1);
+            imageUrls.add(relativePath);
+
+            System.out.println("fqsdfsdfqsdfqsfqsdf");
+            System.out.println(relativePath);
+            System.out.println("fqsdfsdfqsdfqsfqsdf");
 
             Integer id = recipe.getId();
             System.out.println(id);
 
             // Save the image URL to the database (assuming imageService is properly autowired)
-            this.saveImage(filePath,id);
+            this.saveImage(relativePath, id);
         }
 
         return imageUrls;
     }
-
-
     @Override
     public Optional<Image> delete(Long aLong) {
         return Optional.empty();

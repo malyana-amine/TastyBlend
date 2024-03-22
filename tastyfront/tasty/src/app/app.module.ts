@@ -1,4 +1,4 @@
-import { Component, NgModule } from '@angular/core';
+import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 
 import { AppRoutingModule } from './app-routing.module';
@@ -8,11 +8,11 @@ import { TerrazzoBackgroundComponent } from './layout/terrazzo-background/terraz
 import { FormsModule } from '@angular/forms';
 import { RegisterComponent } from './components/register/register.component';
 import { SignupComponent } from './components/signup/signup.component';
-import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
+import { HttpClientModule } from '@angular/common/http';
 import { AuthService } from './services/authService/auth.service';
 import { LoginComponent } from './components/login/login.component';
-import { CommonModule } from '@angular/common';
-import { PostRecipeComponent } from './components/post-recipe/post-recipe.component'; // Import PostRecipeComponent here
+import { CommonModule, NgFor } from '@angular/common';
+import { PostRecipeComponent } from './components/post-recipe/post-recipe.component';
 import { PostComponent } from './components/post/post.component';
 
 @NgModule({
@@ -23,7 +23,8 @@ import { PostComponent } from './components/post/post.component';
         RegisterComponent,
         SignupComponent,
         LoginComponent,
-        PostRecipeComponent // Add PostRecipeComponent to the declarations array
+        PostRecipeComponent,
+        // PostComponent
     ],
     providers: [AuthService],
     bootstrap: [AppComponent],
@@ -33,6 +34,7 @@ import { PostComponent } from './components/post/post.component';
         FormsModule,
         HttpClientModule,
         CommonModule,
+        NgFor,
         PostComponent
     ]
 })

@@ -1,1 +1,11 @@
-<p>user-profil works!</p>
+<div *ngFor="let request of requests" class="friend-request">
+    <div class="request-info">
+      <p><strong>{{ request.sender.firstname }} {{ request.sender.lastname }}</strong></p>
+      <p>{{ request.sender.email }}</p>
+    </div>
+    <div class="buttons">
+      <button class="accept-btn" (click)="acceptRequest(request.id)">Accept</button>
+      <button class="refuse-btn" (click)="refuseRequest(request.id)">Refuse</button>
+    </div>
+  </div>
+  

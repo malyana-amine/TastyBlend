@@ -1,38 +1,30 @@
-<!-- recipe.component.html -->
-
-<div *ngFor="let recipe of recipes">
-    <div class="wrapper">
-      <ul class="cards__list">
-        <li class="card">
-          <!-- Display recipe data here -->
-          <div class="card__header">
-            <!-- Display user data (recipe.user) -->
-            <img class="card__profile-img" [src]="null" alt="User Image"/>
-            <div class="card__meta">
-              <div class="card__meta__displayname">qsd
-                {{ recipe.user.firstname }} {{ recipe.user.lastname }}
-              </div>
-               <!-- Add button to add friend or send request -->
-           <button class="card__footer__add-friend" (click)="addFriendOrSendRequest(recipe.user.id)">Add Friend / Send Request</button>
-
-              <!-- Display other recipe metadata -->
-            </div>
+<div class="wrapper">
+  <ul class="cards__list">
+    <li class="card" *ngFor="let recipe of recipes">
+      <!-- Display recipe data here -->
+      <div class="card__header">
+        <!-- Display user data (recipe.user) -->
+        <img class="card__profile-img" [src]="null" alt="User Image"/>
+        <div class="card__meta">
+          <div class="card__meta__displayname">
+            {{ recipe.user.firstname }} {{ recipe.user.lastname }}
           </div>
-          <div class="card__body">
-            <!-- Display recipe content -->
-            <p>{{ recipe.article }}</p>
-            <!-- Display images -->
-            <div class="slides">
-              <input type="radio" name="radio-btn" id="img-{{i}}" [checked]="i === 0" *ngFor="let image of recipe.images; let i = index"/>
-              <li class="slide-container" *ngFor="let image of recipe.images; let i = index">
-                <div class="slide">
-                  <img [src]="image.imageUrl" />
-                </div>
-                <!-- Add navigation controls here if needed -->
-              </li>
-            </div>
+          <!-- Add button to add friend or send request -->
+          <button class="card__footer__add-friend" (click)="addFriendOrSendRequest(recipe.user.id)">Add Friend / Send Request</button>
+          <!-- Display other recipe metadata -->
+        </div>
+      </div>
+      <div class="card__body">
+        <!-- Display recipe content -->
+        <p>{{ recipe.article }}</p>
+        <!-- Display images -->
+        <div class="row">
+          <div *ngFor="let image of recipe.images; let i = index" class="col-md-4 mb-3">
+            <img class="img-fluid" [src]="'assets/images/' + image.imageUrl" alt="Image {{i+1}}">
           </div>
-               <div class="card__footer">
+        </div>
+      </div>
+      <div class="card__footer">
         <span class="card__footer__like">
           <i class="far fa-heart"></i> 13
         </span>
@@ -43,40 +35,6 @@
           <i class="fas fa-share-alt"></i>
         </span>
       </div>
-        </li>
-      </ul>
-    </div>
-
-    
-<!-- <div class="wrapper">
-  <ul class="cards__list">
-    <li class="card">
-      <div class="card__header">
-        <img class="card__profile-img" src="https://www.syfy.com/sites/syfy/files/styles/1200x680/public/syfywire_cover_media/2018/09/c-3po-see-threepio_68fe125c.jpg" alt="c3po"/>
-        <div class="card__meta">
-          <div class="card__meta__displayname">
-            C-3PO
-          </div>
-          <div class="card__meta__username">
-            humancyborgrelations
-          </div>
-          <div class="card__meta__timestamp">
-            1 day ago
-          </div>
-        </div>
-        <div class="card__menu">
-          <i class="fas fa-ellipsis-h"></i>
-        </div>
-      </div>
-      <div class="card__body">
-        I have a bad feeling about this!
-      </div>
-
     </li>
   </ul>
-</div> -->
-
-
-
-  </div>
-  
+</div>

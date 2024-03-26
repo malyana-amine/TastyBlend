@@ -11,7 +11,10 @@ import { RecipeService } from 'src/app/services/recipe/recipe.service';
 })
 export class PostRecipeComponent {
 
-  formData: Recipe = { article: '', preparationSteps: '', ingredients: '', images: [] };
+  formData: Recipe = {
+    article: '', preparationSteps: '', ingredients: '', images: [],
+    id: undefined
+  };
   selectedImages: File[] = [];
 
   constructor(
@@ -34,7 +37,7 @@ export class PostRecipeComponent {
     this.recipeService.saveRecipe(formData, headers).subscribe(
       (response) => {
         console.log('Recipe saved successfully:', response);
-        this.formData = { article: '', preparationSteps: '', ingredients: '', images: [] };
+        this.formData = {id:'', article: '', preparationSteps: '', ingredients: '', images: [] };
         this.selectedImages = [];
       },
       (error) => {

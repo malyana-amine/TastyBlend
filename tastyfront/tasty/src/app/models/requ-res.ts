@@ -4,4 +4,5 @@ export interface RequRes {
     id: any;
     receiver: User;
     sender: User;
+    requestStatus: string;
 }

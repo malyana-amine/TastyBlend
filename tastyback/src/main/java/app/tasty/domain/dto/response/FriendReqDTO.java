@@ -19,4 +19,5 @@ public class FriendReqDTO {
     private Long id;
     private UserDTO sender;
     private UserDTO receiver;
+    private RequestStatus requestStatus;
 }

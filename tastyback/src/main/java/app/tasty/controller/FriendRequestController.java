@@ -49,6 +49,7 @@ public class FriendRequestController {
 
     @GetMapping("/demande")
     public ResponseEntity<List<FriendReqDTO>> getAllDemonde(HttpServletRequest request) {
+        System.out.println("azefzafazefazefaz");
         try {
             List<FriendRequest> friendRequest = friendRequestService.getAllRequestReciver(request);
             List<FriendReqDTO> friendReqDTOS = friendRequest.stream()

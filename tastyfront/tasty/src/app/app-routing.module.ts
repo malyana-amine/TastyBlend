@@ -7,6 +7,7 @@ import { AuthGuard } from './guards/auth.guard';
 import { PostRecipeComponent } from './components/post-recipe/post-recipe.component';
 import { PostComponent } from './components/post/post.component';
 import { UserProfilComponent } from './components/user-profil/user-profil.component';
+import { MyProfilComponent } from './components/my-profil/my-profil.component';
 
 const routes: Routes = [
   {path:"", component:LoginComponent},
@@ -14,7 +15,9 @@ const routes: Routes = [
   {path:"post", component:PostComponent},
   {path:"test" , component:TestComponent ,canActivate: [AuthGuard]},
   {path:"addRecipe" , component:PostRecipeComponent, canActivate: [AuthGuard]},
-  {path:"requests" , component:UserProfilComponent, canActivate: [AuthGuard]}
+  {path:"requests" , component:UserProfilComponent, canActivate: [AuthGuard]},
+  {path:"profil" , component:MyProfilComponent, canActivate: [AuthGuard]},
+  
 ];
 
 @NgModule({

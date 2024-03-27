@@ -145,6 +145,36 @@ public class FriendRequestServiceImpl implements FriendRequestService {
             throw new IllegalArgumentException("Invalid friend request or sender");
         }
     }
+    @Override
+    public List<User> getAcceptedFriends(HttpServletRequest request) {
+        final String authHeader = request.getHeader(HttpHeaders.AUTHORIZATION);
+        final String refreshToken;
+        final String userEmail;
+        if (authHeader == null || !authHeader.startsWith("Bearer ")) {
+            return null;
+        }
+        refreshToken = authHeader.substring(7);
+        userEmail = jwtService.extractUsername(refreshToken);
+        System.out.println(userEmail + "sqdfqsdfqsdfqsdfqsdfqsdfqsdfqsdfqsdfqsdfsqdfqsdfqsdfqsdf");
+        User user = userService.findByEmail(userEmail);
+
+        // Find all friend requests where the user is either sender or receiver
+        // and the request status is ACCEPTED
+        List<FriendRequest> acceptedRequests = friendRequestRepository
+                .findAllBySenderAndRequestStatusOrReceiverAndRequestStatus(user, RequestStatus.ACCEPTED, user, RequestStatus.ACCEPTED);
+
+        // Extract the friend users from the accepted requests (excluding the user itself)
+        return acceptedRequests.stream()
+                .map(friendRequest -> {
+                    if (friendRequest.getSender().equals(user)) {
+                        return friendRequest.getReceiver();
+                    } else {
+                        return friendRequest.getSender();
+                    }
+                })
+                .distinct() // Remove duplicates in case a user sent/received requests to the same user
+                .collect(java.util.stream.Collectors.toList());
+    }
 
 
     @Override

@@ -2,7 +2,9 @@ package app.tasty.controller;
 
 import app.tasty.domain.dto.response.FriendReqDTO;
 import app.tasty.domain.dto.response.RecipeDTO;
+import app.tasty.domain.dto.response.UserDTO;
 import app.tasty.domain.entities.FriendRequest;
+import app.tasty.domain.entities.User;
 import app.tasty.service.FriendRequestService;
 import jakarta.servlet.http.HttpServletRequest;
 import org.modelmapper.ModelMapper;
@@ -71,5 +73,17 @@ public class FriendRequestController {
     public FriendRequest rejectRequest(@PathVariable Long requestId, HttpServletRequest request) {
         friendRequestService.rejectRequest(requestId ,request);
         return null;
+    }
+    @GetMapping("/acceptedFriends")
+    public ResponseEntity<List<UserDTO>> getAcceptedFriends(HttpServletRequest request) {
+        try {
+            List<User> friends = friendRequestService.getAcceptedFriends(request);
+            List<UserDTO> userDTOs = friends.stream()
+                    .map(user -> modelMapper.map(user, UserDTO.class))
+                    .collect(Collectors.toList());
+            return new ResponseEntity<>(userDTOs, HttpStatus.OK);
+        } catch (Exception e) {
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
     }
 }
